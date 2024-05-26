@@ -20,20 +20,20 @@ export default class ServerApi {
    * Creates an observable that will make an AJAX request to the server every 5 seconds.
    * @returns {Observable<any>} An observable that will make an AJAX request to the server every 5 seconds.
    */
+  #createInterval() {
+    return interval(5000).pipe(switchMap(() => this.#createAjax()))
+  }
+
   #createAjax() {
-    return interval(5000).pipe(
-      switchMap(() =>
-        ajax.getJSON(this.#url + '/latest').pipe(
-          map((data) => JSON.parse(data.posts)),
-          catchError(() => of([])),
-          switchMap((posts) =>
-            forkJoin(
-              posts.map((post) =>
-                ajax
-                  .getJSON(this.#url + `/${post.id}/comments/latest`)
-                  .pipe(map((data) => ({ post: post, comments: JSON.parse(data.comments) }))),
-              ),
-            ),
+    return ajax.getJSON(this.#url + '/latest').pipe(
+      map((data) => JSON.parse(data.posts)),
+      catchError(() => of([])),
+      switchMap((posts) =>
+        forkJoin(
+          posts.map((post) =>
+            ajax
+              .getJSON(this.#url + `/${post.id}/comments/latest`)
+              .pipe(map((data) => ({ post: post, comments: JSON.parse(data.comments) }))),
           ),
         ),
       ),
@@ -46,6 +46,10 @@ export default class ServerApi {
    * @param {function} listener - The listener function that will receive the server messages.
    */
   get latestPosts$() {
+    return this.#createInterval()
+  }
+
+  get posts$() {
     return this.#createAjax()
   }
 }

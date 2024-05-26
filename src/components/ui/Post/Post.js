@@ -2,6 +2,18 @@ import moment from 'moment'
 import getElement from '@/js/getElement'
 import styles from './Post.module.css'
 
+/**
+ * Creates a post element with the given title, author, avatar, image, and creation date.
+ *
+ * @param {Object} props - The properties of the post.
+ * @param {string} props.id - The ID of the post.
+ * @param {string} props.title - The title of the post.
+ * @param {string} props.author - The author of the post.
+ * @param {string} props.avatar - The URL of the author's avatar.
+ * @param {string} props.image - The URL of the post's image.
+ * @param {Date} props.created - The creation date of the post.
+ * @return {HTMLElement} The post element.
+ */
 export const Post = ({ id, title, author, avatar, image, created }) => {
   const postElement = getElement({
     tag: 'div',
