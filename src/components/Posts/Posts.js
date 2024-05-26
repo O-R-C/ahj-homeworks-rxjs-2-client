@@ -31,7 +31,7 @@ export default class Posts {
   }
 
   #subscribes() {
-    this.#store.state$.pipe(map((state) => state.posts)).subscribe((posts) => this.#ui.render(posts))
+    this.#store.posts$.subscribe((posts) => this.#ui.render(posts))
     this.#serverApi.latestPosts$.subscribe((posts) => this.#store.dispatch('SET_POSTS', posts))
   }
 }
