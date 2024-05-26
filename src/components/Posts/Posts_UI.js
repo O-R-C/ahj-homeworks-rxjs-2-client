@@ -39,6 +39,7 @@ export default class Posts_UI extends BaseUI {
    */
   render(posts) {
     if (!posts.length) {
+      this.#showNoPosts()
       return
     }
 
@@ -82,5 +83,14 @@ export default class Posts_UI extends BaseUI {
     comments.forEach((comment) => {
       commentsContainer.append(Comment(comment))
     })
+  }
+
+  /**
+   * Shows a message that there are no posts.
+   *
+   * @return {void} This function does not return anything.
+   */
+  #showNoPosts() {
+    this.postsContent.innerHTML = '<h1>No posts</h1>'
   }
 }
