@@ -1,5 +1,5 @@
 import { ajax } from 'rxjs/ajax'
-import { catchError, of, interval, switchMap } from 'rxjs'
+import { catchError, of, interval, switchMap, forkJoin } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 /**
@@ -17,18 +17,6 @@ export default class ServerApi {
   }
 
   /**
-   * Initializes the server API listeners.
-   */
-  init() {
-    this.#addListeners()
-  }
-
-  /**
-   * Adds event listeners for the server API.
-   */
-  #addListeners() {}
-
-  /**
    * Creates an observable that will make an AJAX request to the server every 5 seconds.
    * @returns {Observable<any>} An observable that will make an AJAX request to the server every 5 seconds.
    */
@@ -38,6 +26,15 @@ export default class ServerApi {
         ajax.getJSON(this.#url + '/latest').pipe(
           map((data) => JSON.parse(data.posts)),
           catchError(() => of([])),
+          switchMap((posts) =>
+            forkJoin(
+              posts.map((post) =>
+                ajax
+                  .getJSON(this.#url + `/${post.id}/comments/latest`)
+                  .pipe(map((data) => ({ post: post, comments: JSON.parse(data.comments) }))),
+              ),
+            ),
+          ),
         ),
       ),
     )

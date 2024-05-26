@@ -29,6 +29,11 @@ export default class postsStore {
    */
   dispatch = (action, payload = null) => this.actions$.next({ type: action, payload })
 
+  /**
+   * Returns an observable that emits the posts array from the state object.
+   *
+   * @return {Observable<Array>} An observable that emits the posts array from the state object.
+   */
   get posts$() {
     return this.state$.pipe(map((state) => state.posts))
   }

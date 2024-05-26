@@ -1,0 +1,53 @@
+@value values: '@css/variables.module.css';
+@value colorMain, colorSecondary, padding, radius, border, shadow from values;
+
+.post {
+  padding: calc(padding * 2) padding;
+  display: flex;
+  flex-direction: column;
+  gap: calc(padding * 2);
+  border: border;
+  background-color: colorSecondary;
+  border-radius: radius;
+  box-shadow: shadow;
+}
+
+.postContent {
+  display: flex;
+  gap: padding;
+}
+
+.authorWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: padding;
+}
+
+.author {
+  font-weight: bold;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.created {
+  color: colorMain;
+  font-size: 0.8rem;
+}
+
+.content {
+  text-align: justify;
+}
+
+.image {
+  width: 100%;
+}
+
+.latest-comments {
+  display: flex;
+  flex-direction: column;
+  gap: padding;
+}

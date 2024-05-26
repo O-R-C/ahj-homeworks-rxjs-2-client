@@ -1,2 +1,14 @@
 @value values: '@css/variables.module.css';
 @value colorMain, colorSecondary, padding, radius, border, shadow from values;
+
+.posts {
+  width: 800px;
+  margin-inline: auto;
+  padding: padding;
+}
+
+.postsContent {
+  display: flex;
+  flex-direction: column;
+  gap: calc(padding * 2);
+}
