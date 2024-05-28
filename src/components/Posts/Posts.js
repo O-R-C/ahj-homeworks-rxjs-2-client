@@ -1,4 +1,5 @@
 import Posts_UI from './Posts_UI'
+import { SET_POSTS } from '@/actions/actionTypes'
 
 /**
  * Class representing a posts component.
@@ -53,7 +54,7 @@ export default class Posts {
    */
   #subscribes() {
     this.#store.posts$.subscribe((posts) => this.#ui.render(posts))
-    this.#serverApi.posts$.subscribe((posts) => this.#store.dispatch('SET_POSTS', posts))
-    this.#serverApi.latestPosts$.subscribe((posts) => this.#store.dispatch('SET_POSTS', posts))
+    this.#serverApi.posts$.subscribe((posts) => this.#store.dispatch(SET_POSTS, posts))
+    this.#serverApi.latestPosts$.subscribe((posts) => this.#store.dispatch(SET_POSTS, posts))
   }
 }
